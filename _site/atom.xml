@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
  
- <title>Jekyll Bootstrap</title>
- <link href="http://username.github.io/" rel="self"/>
- <link href="http://username.github.io"/>
- <updated>2014-07-25T09:54:39+01:00</updated>
- <id>http://username.github.io</id>
+ <title>Pauls Blog</title>
+ <link href="http://pkelly03.github.io/" rel="self"/>
+ <link href="http://pkelly03.github.io"/>
+ <updated>2014-07-25T10:01:53+01:00</updated>
+ <id>http://pkelly03.github.io</id>
  <author>
-   <name>Name Lastname</name>
-   <email>blah@email.test</email>
+   <name>Paul Kelly</name>
+   <email>pkelly03@gmail.com</email>
  </author>
 
  
  <entry>
+   <title>First Post</title>
+   <link href="http://pkelly03.github.io/2014/07/25/first-post"/>
+   <updated>2014-07-25T00:00:00+01:00</updated>
+   <id>http://pkelly03.github.io/2014/07/25/first-post</id>
+   <content type="html">
+</content>
+ </entry>
+ 
+ <entry>
    <title>Jekyll Introduction</title>
-   <link href="http://username.github.io/lessons/2011/12/29/jekyll-introduction"/>
+   <link href="http://pkelly03.github.io/lessons/2011/12/29/jekyll-introduction"/>
    <updated>2011-12-29T00:00:00+00:00</updated>
-   <id>http://username.github.io/lessons/2011/12/29/jekyll-introduction</id>
+   <id>http://pkelly03.github.io/lessons/2011/12/29/jekyll-introduction</id>
    <content type="html">
 &lt;p&gt;This Jekyll introduction will outline specifically  what Jekyll is and why you would want to use it.
 Directly following the intro we’ll learn exactly &lt;em&gt;how&lt;/em&gt; Jekyll does what it does.&lt;/p&gt;
