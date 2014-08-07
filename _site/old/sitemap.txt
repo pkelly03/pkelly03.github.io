@@ -14,5 +14,4 @@
 /old/tags.html
 
 /first-post
-/Hello-World
 /jekyll-introduction
