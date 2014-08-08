@@ -1,15 +1,14 @@
 ---
 layout: post
-title: "Book Review - Reactive Design Patterns (In Progress)"
+title: "Book Selection - Reactive Design Patterns" 
 description: ""
 category: null
 tags: []
-published: false
+published: true
 ---
 
-Our company set up a book club recently where our loose plan is that we are going to try and read an IT book once a month. This month we decided on Reactive Design Patterns. 
+Our company set up a book club recently where our loose plan is that we are going to try and read an IT book once a month. This month we decided on Reactive Design Patterns. Will keep you posted how we get on. 
 
-    val x = Array(1,2,3,4)
     
     
 
