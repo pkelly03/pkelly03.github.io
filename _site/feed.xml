@@ -7,15 +7,6 @@
     <atom:link href="http://pkelly03.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
-        <title>Book Exercises - Manning Functional Programming in Scala - Pattern Matching</title>
-        <description>&lt;p&gt;A few of us in work working towards getting through all the exercises from Mannings’ Functional Programming in Scala. Chapter 3 presents using Pattern Matching and dives right in with some tough exercises.&lt;/p&gt;
-</description>
-        <pubDate>Fri, 08 Aug 2014 00:00:00 +0100</pubDate>
-        <link>http://pkelly03.github.io/scala-and-pattern-matching</link>
-        <guid isPermaLink="true">http://pkelly03.github.io/scala-and-pattern-matching</guid>
-      </item>
-    
-      <item>
         <title>Book Selection - Reactive Design Patterns</title>
         <description>&lt;p&gt;Our company set up a book club recently where our loose plan is that we are going to try and read an IT book once a month. This month we decided on Reactive Design Patterns. Will keep you posted how we get on. &lt;/p&gt;
 
