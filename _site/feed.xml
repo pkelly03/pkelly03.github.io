@@ -7,6 +7,16 @@
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Reactive Design Patterns Chapter 2</title>
+        <description>&lt;p&gt;This is another summary of chapter 2..&lt;/p&gt;
+
+</description>
+        <pubDate>Thu, 07 Aug 2014 00:00:00 +0100</pubDate>
+        <link>/reactive-design-patterns-chapter-2</link>
+        <guid isPermaLink="true">/reactive-design-patterns-chapter-2</guid>
+      </item>
+    
+      <item>
         <title>First Post</title>
         <description>&lt;p&gt;This is sameple txt&lt;/p&gt;
 

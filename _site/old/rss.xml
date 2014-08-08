@@ -5,10 +5,20 @@
         <description> - </description>
         <link></link>
         <link></link>
-        <lastBuildDate>2014-08-07T22:48:31+01:00</lastBuildDate>
-        <pubDate>2014-08-07T22:48:31+01:00</pubDate>
+        <lastBuildDate>2014-08-07T22:56:31+01:00</lastBuildDate>
+        <pubDate>2014-08-07T22:56:31+01:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>Reactive Design Patterns Chapter 2</title>
+                <description>&lt;p&gt;This is another summary of chapter 2..&lt;/p&gt;
+
+</description>
+                <link>/reactive-design-patterns-chapter-2</link>
+                <guid>/reactive-design-patterns-chapter-2</guid>
+                <pubDate>2014-08-07T00:00:00+01:00</pubDate>
+        </item>
 
         <item>
                 <title>First Post</title>

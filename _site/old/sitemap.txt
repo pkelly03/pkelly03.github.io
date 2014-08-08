@@ -13,5 +13,6 @@
 /style.css
 /old/tags.html
 
+/reactive-design-patterns-chapter-2
 /first-post
 /jekyll-introduction

@@ -4,13 +4,23 @@
  <title></title>
  <link href="/" rel="self"/>
  <link href=""/>
- <updated>2014-08-07T22:48:31+01:00</updated>
+ <updated>2014-08-07T22:56:31+01:00</updated>
  <id></id>
  <author>
    <name></name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>Reactive Design Patterns Chapter 2</title>
+   <link href="/reactive-design-patterns-chapter-2"/>
+   <updated>2014-08-07T00:00:00+01:00</updated>
+   <id>/reactive-design-patterns-chapter-2</id>
+   <content type="html">&lt;p&gt;This is another summary of chapter 2..&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>First Post</title>
