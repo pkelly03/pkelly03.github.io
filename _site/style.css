@@ -120,6 +120,7 @@ p {
 
 a {
   color: #4183c4;
+  margin: 15px 15px;
   text-decoration: none;
   cursor: pointer;
 }

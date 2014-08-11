@@ -7,6 +7,63 @@
     <atom:link href="http://pkelly03.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Reactive Design Patterns - Chapter 1 digest</title>
+        <description>&lt;ul&gt;
+  &lt;li&gt;Outlines the importance of responsiveness to users. Books will give tips how to stay responsive in the face of variable load, partial outages and program failure. &lt;/li&gt;
+  &lt;li&gt;Presents the reactive manifesto which is a small summary of the challenges facing computer systems. 
+    &lt;ol&gt;
+      &lt;li&gt;It must react to its users (responsiveness)	&lt;/li&gt;
+      &lt;li&gt;It must react to failure and stay available (resilience)	&lt;/li&gt;
+      &lt;li&gt;It must react to variable load conditions (scalability)	&lt;/li&gt;
+      &lt;li&gt;It must react to events (event orientation)	&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Responsiveness - must react to users.
+    &lt;ul&gt;
+      &lt;li&gt;Old way, consider val x = f(30) - evaluation of the function occurs synchronously. Falls over when it needs to be distributed among multiple cores etc.&lt;/li&gt;
+      &lt;li&gt;In 94, used to be a huge difference between local and remote calls.&lt;/li&gt;
+      &lt;li&gt;Major advances in networking hardware. No longer the case, a remote call is almost the same. Need to treat remote and local calls the same.&lt;/li&gt;
+      &lt;li&gt;To be responsive, we need the latency to be as small as possible. We need to define an upper limit on this latency, why? it allows users to cap their wait times accordingly.&lt;/li&gt;
+      &lt;li&gt;Parrallization - 3 sub tasks executed sequentially, total response is sum of all 3 latencies. 3 sub tasks executed in parallel, the total response is the time to complete the slowest of the 3 sub tasks.&lt;/li&gt;
+      &lt;li&gt;Sequential way&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;&lt;code&gt;
+   	val response1 = getVal1()
+   	val response2 = getVal2()
+   	val response3 = getVal3()
+   	def compose(response1, response2, response3)
+  &lt;/code&gt;
+  This way is blocking. Think of it as the last sub task that comes back dispatches the event.
+  Better way is through &lt;code&gt;CompletableFuture&lt;/code&gt; or the scala way as below:&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; val fa: Future[ReplyA] = taskA()
+	val fb: Future[ReplyB] = taskB()
+	val fc: Future[ReplyC] = taskC()
+    
+ val fr: Future[Result] = for (a &amp;lt;- fa; b &amp;lt;- fb; c &amp;lt;- fc)
+                          yield aggregate(a, b, c)
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;How do you choose best case latency? 3 mins 16 is too long, 50 ms sounds good, but 1 in 100 requests might never go through even though the service is working.&lt;/li&gt;
+  &lt;li&gt;This is basically saying that choosing the upper latency bound is always going to be a tradeoff between reliability and responsiveness.&lt;/li&gt;
+  &lt;li&gt;Bounding latency, can use bounded queues. Reqeusts coming in faster then we can process responses. In 1s we receive 110 requests, we process 100. This leads to an extra 0.1s of latency. Latency can quickly add up. Use explicit queues. Kind of confusing this section [REVISIT]&lt;/li&gt;
+  &lt;li&gt;Circuit Breakers - interest concept. When a service is being overwhelmed, and the time is consistently rising above the threshold. The circuit breaker will trip and requests will now take a different route - degraded service or failing fast etc. When it has time to recuperate, circuit breaker will resume as normal allowing requests to flow correctly through teh system.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 11 Aug 2014 00:00:00 +0100</pubDate>
+        <link>http://pkelly03.github.io/reactive-design-patterns--chapter-1-digest</link>
+        <guid isPermaLink="true">http://pkelly03.github.io/reactive-design-patterns--chapter-1-digest</guid>
+      </item>
+    
+      <item>
         <title>Book Selection - Reactive Design Patterns</title>
         <description>&lt;p&gt;Our company set up a book club recently where our loose plan is that we are going to try and read an IT book once a month. This month we decided on Reactive Design Patterns. Will keep you posted how we get on. &lt;/p&gt;
 
