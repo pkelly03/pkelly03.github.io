@@ -62,7 +62,7 @@
   &lt;li&gt;React to failure
     &lt;ul&gt;
       &lt;li&gt;Systems will go down, software, hardware, human. It’s only a matter of when.&lt;/li&gt;
-      &lt;li&gt;Install bulkheads to compartments to isolate failure.&lt;/li&gt;
+      &lt;li&gt;Install bulkheads to compartments to isolate failure, taken from shipbuilding. One container will fill with water, all others will be fine.&lt;/li&gt;
       &lt;li&gt;Manifesto calls it resilience instead of reliability as it’s about how quickly the service(s) can bounce back from a production issue.&lt;/li&gt;
       &lt;li&gt;Supervisor role, instead of coupling fault tolerance with business logic, seperate out the fault tolerance section.&lt;/li&gt;
     &lt;/ul&gt;
@@ -83,10 +83,14 @@
     &lt;ul&gt;
       &lt;li&gt;The focus should be on events instead of method calls. &lt;/li&gt;
       &lt;li&gt;Should focus on high level interactions instead of micromanaged getters/setters that promote tight coupling etc.&lt;/li&gt;
-      &lt;li&gt;&lt;/li&gt;
+      &lt;li&gt;Amdahls Law, if a program can be 95% parallelizable, then 5% must be done processed in a globally agreed sequential fashion. Amdahls law determines the effect this has on a system. This limits scalability. Ideally you want to share nothing!&lt;/li&gt;
+      &lt;li&gt;Most APIs ie socket api, have a synchronous facade above an event-driven system. Blocking calls lead to expensive context switching between threads. &lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
+
+&lt;p&gt;How does this change the way we program?&lt;/p&gt;
+
 </description>
         <pubDate>Mon, 11 Aug 2014 00:00:00 +0100</pubDate>
         <link>http://pkelly03.github.io/reactive-design-patterns--chapter-1-digest</link>

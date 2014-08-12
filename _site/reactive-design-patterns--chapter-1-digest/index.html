@@ -52,7 +52,7 @@
   <li>React to failure
     <ul>
       <li>Systems will go down, software, hardware, human. It’s only a matter of when.</li>
-      <li>Install bulkheads to compartments to isolate failure.</li>
+      <li>Install bulkheads to compartments to isolate failure, taken from shipbuilding. One container will fill with water, all others will be fine.</li>
       <li>Manifesto calls it resilience instead of reliability as it’s about how quickly the service(s) can bounce back from a production issue.</li>
       <li>Supervisor role, instead of coupling fault tolerance with business logic, seperate out the fault tolerance section.</li>
     </ul>
@@ -73,7 +73,11 @@
     <ul>
       <li>The focus should be on events instead of method calls. </li>
       <li>Should focus on high level interactions instead of micromanaged getters/setters that promote tight coupling etc.</li>
-      <li></li>
+      <li>Amdahls Law, if a program can be 95% parallelizable, then 5% must be done processed in a globally agreed sequential fashion. Amdahls law determines the effect this has on a system. This limits scalability. Ideally you want to share nothing!</li>
+      <li>Most APIs ie socket api, have a synchronous facade above an event-driven system. Blocking calls lead to expensive context switching between threads. </li>
     </ul>
   </li>
 </ol>
+
+<p>How does this change the way we program?</p>
+
