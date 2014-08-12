@@ -13,7 +13,7 @@
 <ol>
   <li>Responsiveness - must react to users.
     <ul>
-      <li>Old way, consider val x = f(30) - evaluation of the function occurs synchronously. Falls over when it needs to be distributed among multiple cores etc.</li>
+      <li>Old way, consider val x*  = f(30) - evaluation of the function occurs synchronously. Falls over when it needs to be distributed among multiple cores etc.</li>
       <li>In 94, used to be a huge difference between local and remote calls.</li>
       <li>Major advances in networking hardware. No longer the case, a remote call is almost the same. Need to treat remote and local calls the same.</li>
       <li>To be responsive, we need the latency to be as small as possible. We need to define an upper limit on this latency, why? it allows users to cap their wait times accordingly.</li>
@@ -27,7 +27,8 @@
    	val response3 = getVal3()
    	def compose(response1, response2, response3)
   </code>
-  This way is blocking. Think of it as the last sub task that comes back dispatches the event.
+  This way is blocking. 
+  A better way would be when the last service completes its job it organises dispatching the event.Think of it as the last sub task that comes back dispatches the event.
   Better way is through <code>CompletableFuture</code> or the scala way as below:</p>
 
     <pre><code> val fa: Future[ReplyA] = taskA()
@@ -47,3 +48,30 @@
   <li>Circuit Breakers - interest concept. When a service is being overwhelmed, and the time is consistently rising above the threshold. The circuit breaker will trip and requests will now take a different route - degraded service or failing fast etc. When it has time to recuperate, circuit breaker will resume as normal allowing requests to flow correctly through teh system.</li>
 </ul>
 
+<ol>
+  <li>React to failure
+    <ul>
+      <li>Systems will go down, software, hardware, human. It’s only a matter of when.</li>
+      <li>Install bulkheads to compartments to isolate failure.</li>
+      <li>Manifesto calls it resilience instead of reliability as it’s about how quickly the service(s) can bounce back from a production issue.</li>
+      <li>Supervisor role, instead of coupling fault tolerance with business logic, seperate out the fault tolerance section.</li>
+    </ul>
+  </li>
+  <li>Reacting to load
+    <ul>
+      <li>To react to load, a system needs to do be able to do 2 things:
+        <ol>
+          <li>Need to split up individual streams of work items that can be worked on on different machines in parallel.</li>
+          <li>Route traffic in the direction of another service depending on load, or spin up new instances if reaching capactity or wind down services if very quiet. </li>
+        </ol>
+      </li>
+      <li>number of requests serviced by the system = average number of requests * time spent processing. There is no reason why we can’t automate this figure. This will allow us to determine how much we should parallelize. We can capture requests at entry and exit. </li>
+      <li>This service would act like a supervisor or monitoring service that polls the system and gathers this metric to determine whether it needs to scale up.</li>
+    </ul>
+  </li>
+  <li>Reacting to events
+    <ul>
+      <li></li>
+    </ul>
+  </li>
+</ol>
