@@ -1,6 +1,6 @@
 ---
 layout: 
-title: Reactive Design Patterns - Chapter 1 digest
+title: Reactive Design Patterns - Skimmers Guide Chapter 1
 published: True
 categories: []
 tags: [reactive, software, architecture]
