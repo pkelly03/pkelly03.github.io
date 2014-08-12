@@ -59,4 +59,3 @@ tags: [reactive, software, architecture]
 4. Reacting to events
   * The focus should be on events instead of method calls. 
   * Should focus on high level interactions instead of micromanaged getters/setters that promote tight coupling etc.
-  * x
