@@ -27,7 +27,8 @@ tags: [reactive, software, architecture]
 	  	val response3 = getVal3()
 	  	def compose(response1, response2, response3)
       ```
-  This way is blocking. Think of it as the last sub task that comes back dispatches the event.
+  This way is blocking. 
+  A better way would be when the last service completes its job it organises dispatching the event.Think of it as the last sub task that comes back dispatches the event.
   Better way is through ```CompletableFuture``` or the scala way as below:
 
 	    val fa: Future[ReplyA] = taskA()
@@ -42,5 +43,18 @@ tags: [reactive, software, architecture]
   * Bounding latency, can use bounded queues. Reqeusts coming in faster then we can process responses. In 1s we receive 110 requests, we process 100. This leads to an extra 0.1s of latency. Latency can quickly add up. Use explicit queues. Kind of confusing this section [REVISIT]
   * Circuit Breakers - interest concept. When a service is being overwhelmed, and the time is consistently rising above the threshold. The circuit breaker will trip and requests will now take a different route - degraded service or failing fast etc. When it has time to recuperate, circuit breaker will resume as normal allowing requests to flow correctly through teh system.
    
- 2. React to failure
+2. React to failure
+  * Systems will go down, software, hardware, human. It's only a matter of when.
+  * Install bulkheads to compartments to isolate failure.
+  * Manifesto calls it resilience instead of reliability as it's about how quickly the service(s) can bounce back from a production issue.
+  * Supervisor role, instead of coupling fault tolerance with business logic, seperate out the fault tolerance section.
+
+3. Reacting to load
+  * To react to load, a system needs to do be able to do 2 things:
+    1. Need to split up individual streams of work items that can be worked on on different machines in parallel.
+    2. Route traffic in the direction of another service depending on load, or spin up new instances if reaching capactity or wind down services if very quiet. 
+  * number of requests serviced by the system = average number of requests * time spent processing. There is no reason why we can't automate this figure. This will allow us to determine how much we should parallelize. We can capture requests at entry and exit. 
+  * This service would act like a supervisor or monitoring service that polls the system and gathers this metric to determine whether it needs to scale up.
+  
+4. Reacting to events
   * 
