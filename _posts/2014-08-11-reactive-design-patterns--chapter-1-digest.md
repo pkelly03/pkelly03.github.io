@@ -57,4 +57,6 @@ tags: [reactive, software, architecture]
   * This service would act like a supervisor or monitoring service that polls the system and gathers this metric to determine whether it needs to scale up.
   
 4. Reacting to events
-  * 
+  * The focus should be on events instead of method calls. 
+  * Should focus on high level interactions instead of micromanaged getters/setters that promote tight coupling etc.
+  * x

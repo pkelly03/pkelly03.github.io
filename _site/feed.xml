@@ -81,6 +81,8 @@
   &lt;/li&gt;
   &lt;li&gt;Reacting to events
     &lt;ul&gt;
+      &lt;li&gt;The focus should be on events instead of method calls. &lt;/li&gt;
+      &lt;li&gt;Should focus on high level interactions instead of micromanaged getters/setters that promote tight coupling etc.&lt;/li&gt;
       &lt;li&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
