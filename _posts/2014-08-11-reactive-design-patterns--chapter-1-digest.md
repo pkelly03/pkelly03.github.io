@@ -46,7 +46,7 @@ tags: [reactive, software, architecture]
 2. React to failure
   * Systems will go down, software, hardware, human. It's only a matter of when.
   * Install bulkheads to compartments to isolate failure, taken from shipbuilding. One container will fill with water, all others will be fine.
-  * Manifesto calls it resilience instead of reliability as it's about how quickly the service(s) can bounce back from a production issue.
+  * Manifesto calls it resilience instead of reliability as it's about how quickly the service(s) can bounce back from a production <issue class=""></issue>
   * Supervisor role, instead of coupling fault tolerance with business logic, seperate out the fault tolerance section.
 
 3. Reacting to load
@@ -63,4 +63,15 @@ tags: [reactive, software, architecture]
   * Most APIs ie socket api, have a synchronous facade above an event-driven system. Blocking calls lead to expensive context switching between threads. 
 
 How does this change the way we program?
-
+  * Strive for bulkheads, where 1 service if it fails, it fails in isolation, service chat through asynchronous messaging.
+  * Need to treat all interactions as distributed even if the run on the same core. 
+  * Lose consistency in the CAP theorem, Almost scary - seems like a shift away from strong transactional guarantees. Two people editing a document, if they were both to be consistent, then each keypress would need to register with a central server to determine any updates before displaying the typed character. Imagine the latency? How would this scale to 1000 users of the same document. Not very well.
+  * Distributed systems are built on a new set of principles -> BASE 
+    1. Basic Availability
+	1. Soft State - State needs to be maintained actively rather than persisted by default.
+	1. Eventual Consistency - possible for external observers to see data which is inconsistent.
+  * Similar to SOA patterns? Kind of, but need to move away from the synchronous blocking style of communication and leveraging the event driven nature of the underlying system. 
+  * Essential complexity - complexity introduced by the problem domain
+  * Incidental complexity - complexity introduced by the solution to the problem.
+  * Higher level abstractions might tackle the essential complexity, but introduce incidental complexity  - ie the performance and scalability issues that might arise.
+  * 
