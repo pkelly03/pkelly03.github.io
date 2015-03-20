@@ -1,0 +1,191 @@
+<p>Chapter 1- Key benefits</p>
+
+<ul>
+  <li>Technology Heterogeneity - pick the right tool for the right job</li>
+  <li>Resilience - the notion of a bulkhead, if one component fails, then the failure doesn’t cascade, on a monolithic service, if the service fails, everything fails.</li>
+  <li>Improved scaling - with smaller services, you can scale those services that need scaling</li>
+  <li>Ease of deployment - make a change to an individual service and deploy it independently</li>
+  <li>Smaller teams working on smaller services tend to be more efficient</li>
+  <li>Individual service being so small, the cost of replacement is tiny in comparison to a larger monolithic app</li>
+</ul>
+
+<p>Chapter 2- Principles/Practices role of an architect</p>
+
+<p>Think of an architect like a town planner, different zones, you should care less about what happens between the zones/service boundaries. Need to spend a lot of time thinking about how the services talk to each other. Important to pick principles/practices that your team sticks too.</p>
+
+<ul>
+  <li>Example principles might be (consistent interfaces between services, no silver bullets, make choices that favor rapid feedback and change)</li>
+  <li>Example practices might be (standard HTTP/Rest, Standard monitoring service (nagios etc) Encapsulate legacy, Published integration model)</li>
+</ul>
+
+<p>Questions: Have never done this before, has anyone else you know?</p>
+
+<p>Chapter 3 - What makes a good service?</p>
+
+<ul>
+  <li>Loosely coupled - make a change to a service and deploy independent of other services</li>
+  <li>Strong cohesion - related behaviour to sit together (same zone), if we have to make changes to behaviour and it effects lots of different services, not good. Good to find boundaries in our problem domain that helps ensure related behaviour in one place - leads to chatty apps.</li>
+</ul>
+
+<p>Questions: We don’t do this in DCJ, why?</p>
+
+<p>Bounded Context</p>
+
+<ul>
+  <li>From DDD, the idea that a given problem domain consists of multiple bounded contexts. Within a bounded contexts, there are things that communicated within the boundary, and thingNbcbchocb b b Khulna bank s (models) that communicate outside. Shared externally. </li>
+</ul>
+
+<p>Questions/Discussion: How to you go about implementing bounded contexts? He suggests not by data that is shared, but by business capability. 
+Answer: He suggests starting off with coarse grained services, sub divide y into nested contexts if required.
+Discussion:</p>
+
+<p>Chapter 4 - Integration</p>
+
+<ul>
+  <li>Introduce a service to talk to the database rather than the external apps talking directly to the database.</li>
+  <li>Talks a lot about different technologies, RPC (SOAP/RMI), HTTP(REST), HATEOAS, JSON vs XML.</li>
+  <li>Async, he recommends wrap an overall interaction which is asynchronous into a bunch of synchronous calls. Discussion point below.</li>
+</ul>
+
+<p>Discussion - Above, HATEOAS over REST. Chatty apps.
+Discussion - (Pg 66) Lifecycle of key domain events
+Discussion - wrap an overall interaction which is asynchronous into a bunch of synchronous calls. Discuss. Event models with synchronous rest over http can be a very powerful combination</p>
+
+<p>Chapter 5 - Integratating with 3rd Party software</p>
+
+<ul>
+  <li>Nuno did this, they had a micro service that acted as a nice facade to a 3rd party system.</li>
+  <li>This facade/service should be split/placed in the bounded context that makes sense. ie Employee or Payments</li>
+</ul>
+
+<p>Chapter 6 - Breaking the monolith/legacy</p>
+
+<ul>
+  <li>Identify what high level bounded contexts exists with the system/organisation</li>
+  <li>Create package/modules based on these bounded contexts.</li>
+  <li>What seam do you start with first? lots of factors, technology choice, pace of change</li>
+  <li>Talks a lot about breaking up databases which i didn’t really investigate</li>
+</ul>
+
+<p>Chapter 7 - Deployment</p>
+
+<ul>
+  <li>Recommends a single CI build per micro service</li>
+  <li>One of the big takes from this book is that he stresses that we should be able to deploy our services independent of each other.</li>
+  <li>Various types of artefacts that we can move across pipeline to production these include:</li>
+  <li>
+    <ul>
+      <li>Platform specific artefacts: use configuration management tools like puppet and chef, downside is the time it might take to run scripts on a machine (in AWS, download and install java, mysql etc -  prob 10 mins) especially in on demand computing platforms, complex deployment scripts </li>
+      <li>Operating system artifacts: rpm packages, msi etc. use tools native to OS to install it. upside, simplified development approach. </li>
+      <li>Custom images: build image once, launch copies, no need to install dependencies. Down side, can take long to build an image. Large image sizes over a slow wifi connection.</li>
+      <li>Images as artefacts: ie Netflix AWS AMIs, pro’s easy way to implement an immutable server.</li>
+    </ul>
+  </li>
+  <li>Immutable servers, not allowing anyone to make config changes to a box once an image has been built. If config changes differ to whats in source control, called configuration drift. Steps around this, we can disable SSH.</li>
+  <li>Continuous delivery, moving through the pipelines, problems can occur if environments differ greatly. multiple load balanced hosts versus a single stand alone laptop. You want to ensure that your environments are more production like to catch issues (i.e. session replication etc), although there is a balance between time to reproduce production environment and speed of development and feedback time.</li>
+  <li>Differing artefacts across different environments, i.e. Customer-service-test artefact, and customer-service-prod artefact, how can we be sure that we have verified the software that ends up in production. </li>
+  <li>Better to use a single artefact and manage configuration separately. </li>
+  <li>Multiple services per host - while cost efficient has downsides: </li>
+  <li>
+    <ul>
+      <li>limit your deployment options, image based deployments and immutable servers (unless we tie various services together in a single artefact which we really don’t want to do)</li>
+      <li>Want to be able to deploy each service independently.</li>
+      <li>Sometimes end up treating different services with different needs the same (some might requrie a faster box, others more scaling options)</li>
+    </ul>
+  </li>
+  <li>Using application containers (mostly downsides), 5 java services in 1 servlet container (and 1 jvm) versus 5 jvms, while this is nice the downsides outweigh this:</li>
+  <li>
+    <ul>
+      <li>Lots offer shared in memory state which is something we really want to avoid as affects scaling our services</li>
+      <li>slow spin up times</li>
+      <li>netty better.</li>
+    </ul>
+  </li>
+  <li>Single service per host</li>
+  <li>
+    <ul>
+      <li>monitoring and remediation much easier.</li>
+      <li>single point of failure, does not affect multiple services</li>
+      <li>more hosts to manage though</li>
+    </ul>
+  </li>
+  <li>Platform as a service</li>
+  <li>
+    <ul>
+      <li>Very useful, think heroku, handles scaling etc.</li>
+      <li>not great if you have a non standard application</li>
+    </ul>
+
+    <p>Physical to virtual</p>
+  </li>
+  <li>Traditional world of virtualization</li>
+  <li>
+    <ul>
+      <li>Allows us to slice up a physical server into separate hosts</li>
+      <li>Sock drawer analogy, dividers take up space also. </li>
+    </ul>
+  </li>
+  <li>Vagrant</li>
+  <li>
+    <ul>
+      <li>provides you with a virtual cloud on your laptop</li>
+      <li>Makes it easier for you to create production like environments on your local machine.</li>
+      <li>Spin up multiple vms, have them mapped to individual directories, makes changes to files and see changes reflected directly</li>
+      <li>Downside, running lots of VMs will tax the average developer machine.</li>
+    </ul>
+  </li>
+  <li>Docker</li>
+  <li>
+    <ul>
+      <li></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Chapter 8 testing </p>
+
+<ul>
+  <li>Use consumer driven contracts instead of end to end tests</li>
+  <li>What’s wrong with end to end tests, can be brittle and flaky, people lose trust quickly.</li>
+  <li>Martin fowler talks about test double as a substitute for spy’s mocks stubs etc. read his post </li>
+</ul>
+
+<p>Chapter 9 monitoring </p>
+
+<ul>
+  <li>Correlation ids is a useful concept, where you pass this along to all services. </li>
+  <li>Graphite seemed like a nice too, simple Ali for generating charts of your service </li>
+  <li>Ssh multiplexors allow you to perform the same command on multiple ssh terminals.</li>
+  <li>Use metrics to see what services/features are being used.</li>
+  <li>Hysterix is a circuit breaking library </li>
+</ul>
+
+<p>Chapter 10 security </p>
+
+<ul>
+  <li>Types</li>
+  <li>
+    <ul>
+      <li>HTTP Basic Authentication - username password sent as part of HTTP header - highly problematic as username and password not sent in a secure manner, should only be used over HTTPS</li>
+      <li>HTTP Basic Authentication over HTTPS - Due to nature of https, the client gains strong guarantees that the server it is talking to is who it thinks it is. Challenge is that each server needs to manage it’s own certificates which is a problem when shared over multiple machines, certificate issuing process but an operational burden.</li>
+      <li>TLS - Transport Layer Security. Used to verify that the client is who we think we are talking to (unlike HTTPS). Each client has an X.509 certificate installed, used to establish a link between client and server. </li>
+      <li>HMAC over HTTP - Body request along with key is hashed.Request uses its own copy of the private key and the request body to recreate the hash, if it matches then it allows the request. Man in the middle messes with  the request then the hash won’t match.Also, private key is never sent in transit, so cannot be compromised. Downside is that the client and server need a shared secret. Amazon use this for S3, if use it, use a long key SHA-256.</li>
+      <li>API Keys - Not security as such, but more to protect services for others. Using an issued API key, twitter can limit how many requests a given person has, stopping overload. Amazon use API keys to limit what services a user has.</li>
+    </ul>
+  </li>
+  <li>Where do we store our keys? One option is to use a key vault which your server can access when it needs a key.</li>
+</ul>
+
+<p>Chapter 11 Conways law and system design</p>
+
+<ul>
+  <li>Geographical boundaries between people involved with the development of a system can be a great way to drive when services can be decomposed. This problem came from when one service was worked on my 2-3 geolocated teams. Nightmare, fine grained communication lost. Align service ownership to co located teams, which themselves are aligned around the same bounded contexts of the organisation.</li>
+  <li>Internal open source - one solution to service ownership. Instead people submit changes for acceptance. Need a core team of committers (gatekeepers)</li>
+</ul>
+
+<p>Chapter 12 Microservices at scale</p>
+
+<ul>
+  <li>Failure is everywhere. Many organisations try to put processes and controls to try and stop failure from occurring. But put little or no-thought into actually making it easier to recover from failure in the first place.</li>
+  <li>Degrading functionality - Sample page on an ecommerce site, we might use 3-4 services, basket, catalogue, </li>
+</ul>

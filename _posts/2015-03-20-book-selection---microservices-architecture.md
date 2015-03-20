@@ -1,8 +1,8 @@
 ---
 layout: 
 title: Book Selection - Microservices Architecture
-categories: []
-tags: []
+categories: [IT]
+tags: [microservices, scaling software]
 published: True
 
 ---

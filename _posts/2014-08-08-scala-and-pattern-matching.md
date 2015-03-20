@@ -2,7 +2,7 @@
 layout: 
 title: Book Exercises - Manning Functional Programming in Scala - Pattern Matching
 published: False
-categories: []
+categories: [IT]
 tags: []
 ---
 
