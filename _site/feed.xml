@@ -7,6 +7,119 @@
     <atom:link href="http://pkelly03.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>Book Review - Reactive Application Development</title>
+        <description>&lt;p&gt;Chapter 1 - Introduction&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;It must react to its users (responsiveness)&lt;/li&gt;
+  &lt;li&gt;It must react to failure and stay available (resilience)&lt;/li&gt;
+  &lt;li&gt;It must react to variable load conditions (scalability)&lt;/li&gt;
+  &lt;li&gt;It must react to events (event orientation)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Discuss monolithic architectures, typically a centralised database with blocking drivers.
+Tightly coupled middleware, cannot release a subset of our api because it’s impossible to version our API. Blocking nature, in order to create the composite view (waits for daily deals to render, images to download etc) before rendering the page. Tries to solve this problem by using concurrency. Synchronised blocks, hard to understand code. What was deterministic sequential code is now non deterministic. Job of the programmer is now to prune this non determinism.&lt;/p&gt;
+
+&lt;p&gt;Amdahls Law
+It’s been proven that blocking of any kind, anywhere in the system will measurably impact scale due to:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Contention; waiting for queues or shared resources.&lt;/li&gt;
+  &lt;li&gt;Coherency; the delay for data to become consistent”&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Gunther law suggest that now matter how much hard you throw at a problem, you can make a blocking system worse.&lt;/p&gt;
+
+&lt;p&gt;CAP Theorem&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Consistency&lt;/li&gt;
+  &lt;li&gt;Availability&lt;/li&gt;
+  &lt;li&gt;Partitioning&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;2 of 3 possible.&lt;/p&gt;
+
+&lt;p&gt;Consistency -&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Strong consistency is incredibly expensive and should be avoided at all costs.&lt;/li&gt;
+  &lt;li&gt;Eventual consistency - no new updates to a data item, eventually all accesses to that item will return the last updated value. Pillar in distributed computing.&lt;/li&gt;
+  &lt;li&gt;Casual consistency - stronger than eventual as ensures that operations are ordered.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Chapter 2&lt;/p&gt;
+
+&lt;p&gt;Akka - location transparency. Distributed by design. Local and remote interfaces are the same.&lt;/p&gt;
+
+&lt;p&gt;Good example of contention scenarios&lt;/p&gt;
+
+&lt;p&gt;Contention causes problems end of. What’s the solution?&lt;/p&gt;
+
+&lt;p&gt;Share nothing&lt;/p&gt;
+
+&lt;p&gt;Actor model provides :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A safe, efficient way to reason about computations in a concurrent environment&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Main components an actor contains:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;State&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Essentially Akka isolates each actor on a light weight thread, that protects it from the rest of the system. houses each thread on a lightweight thread. The actors themselves (housed inside a light-weight thread) run on a real set of threads, where a single thread may house many actors with subsequent invocations for a given actor occurring on a different thread. Akka also handles all the complexities of dealing with these concurrent interactions.&lt;/p&gt;
+
+&lt;p&gt;ActorRef - proxy for the implementation, can be local or remote. Location of the actor&lt;/p&gt;
+
+&lt;p&gt;Actor delivery mechanisms:&lt;/p&gt;
+
+&lt;p&gt;At most once :&lt;/p&gt;
+
+&lt;p&gt;Chapter 4&lt;/p&gt;
+
+&lt;p&gt;Tries to avoid ‘A big ball of mud’ - meaning a domain design that is  is “haphazardly structured, sprawling, sloppy, duct-tape and bailing wire, spaghetti code jungle.
+This typically happens due to time contraints, budget, inexperience, visibility (UI visible, back end not so)&lt;/p&gt;
+
+&lt;p&gt;How can you avoid this?&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Control fragmentation with continuous integration - different teams breaking a domain down into smaller subsections and working on them independently is not good. To get around this, ideas and code should be merged daily.&lt;/li&gt;
+  &lt;li&gt;Avoid anaemic domain models - might at first seem reasonable and potentially map to a real life domain object, but when examined closer it has no real behaviour. An anaemic model would be a simple data structure with simple getters and setters.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bounded Contexts&lt;/p&gt;
+
+&lt;p&gt;You begin modelling a domain by dividing up major areas into a set of bounded contexts or subdomains.
+For example a flight domain could be divided into three major areas of behaviour:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Aircraft&lt;/li&gt;
+  &lt;li&gt;Tower concerned with multiple aircraft arriving&lt;/li&gt;
+  &lt;li&gt;Ground control concerns itself with moving multiple airplanes around the airport&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Each piece above can exist at runtime on separate hardware and across different physical locations.&lt;/p&gt;
+
+&lt;p&gt;Anti Corruption Layer
+A subdomain can communicate with other contexts, when it does it uses what DDD term ‘Anti Corruption Layer’ or ACL.
+It’s an outer layer that sits inside a bounded context to convert and validate data to and from other contexts and external systems.
+A request might come into the aircraft bounded context to reduce altitude by 2000 feet. The ACL has to determine whether this is a valid request and does not
+smash the aircraft into the ground.&lt;/p&gt;
+
+&lt;p&gt;The use of bounded contexts within a domain allows for services to be decoupled and communicate via messaging.&lt;/p&gt;
+
+&lt;p&gt;Ubiquitous Language
+The ubiquitous language is a set of terms describing all aspects of the domain that are understood by both the domain experts and the developers.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 27 Jan 2016 00:00:00 +0000</pubDate>
+        <link>http://pkelly03.github.io/book-review-reactive-application-development</link>
+        <guid isPermaLink="true">http://pkelly03.github.io/book-review-reactive-application-development</guid>
+      </item>
+    
+      <item>
         <title>Book Selection - Microservices Architecture</title>
         <description>&lt;p&gt;Chapter 1- Key benefits&lt;/p&gt;
 
@@ -42,7 +155,7 @@
 &lt;p&gt;Bounded Context&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;From DDD, the idea that a given problem domain consists of multiple bounded contexts. Within a bounded contexts, there are things that communicated within the boundary, and thingNbcbchocb b b Khulna bank s (models) that communicate outside. Shared externally. &lt;/li&gt;
+  &lt;li&gt;From DDD, the idea that a given problem domain consists of multiple bounded contexts. Within a bounded contexts, there are things that communicated within the boundary, and thingNbcbchocb b b Khulna bank s (models) that communicate outside. Shared externally.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Questions/Discussion: How to you go about implementing bounded contexts? He suggests not by data that is shared, but by business capability. 
@@ -85,17 +198,17 @@ Discussion - wrap an overall interaction which is asynchronous into a bunch of s
   &lt;li&gt;Various types of artefacts that we can move across pipeline to production these include:&lt;/li&gt;
   &lt;li&gt;
     &lt;ul&gt;
-      &lt;li&gt;Platform specific artefacts: use configuration management tools like puppet and chef, downside is the time it might take to run scripts on a machine (in AWS, download and install java, mysql etc -  prob 10 mins) especially in on demand computing platforms, complex deployment scripts &lt;/li&gt;
-      &lt;li&gt;Operating system artifacts: rpm packages, msi etc. use tools native to OS to install it. upside, simplified development approach. &lt;/li&gt;
+      &lt;li&gt;Platform specific artefacts: use configuration management tools like puppet and chef, downside is the time it might take to run scripts on a machine (in AWS, download and install java, mysql etc -  prob 10 mins) especially in on demand computing platforms, complex deployment scripts&lt;/li&gt;
+      &lt;li&gt;Operating system artifacts: rpm packages, msi etc. use tools native to OS to install it. upside, simplified development approach.&lt;/li&gt;
       &lt;li&gt;Custom images: build image once, launch copies, no need to install dependencies. Down side, can take long to build an image. Large image sizes over a slow wifi connection.&lt;/li&gt;
       &lt;li&gt;Images as artefacts: ie Netflix AWS AMIs, pro’s easy way to implement an immutable server.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Immutable servers, not allowing anyone to make config changes to a box once an image has been built. If config changes differ to whats in source control, called configuration drift. Steps around this, we can disable SSH.&lt;/li&gt;
   &lt;li&gt;Continuous delivery, moving through the pipelines, problems can occur if environments differ greatly. multiple load balanced hosts versus a single stand alone laptop. You want to ensure that your environments are more production like to catch issues (i.e. session replication etc), although there is a balance between time to reproduce production environment and speed of development and feedback time.&lt;/li&gt;
-  &lt;li&gt;Differing artefacts across different environments, i.e. Customer-service-test artefact, and customer-service-prod artefact, how can we be sure that we have verified the software that ends up in production. &lt;/li&gt;
-  &lt;li&gt;Better to use a single artefact and manage configuration separately. &lt;/li&gt;
-  &lt;li&gt;Multiple services per host - while cost efficient has downsides: &lt;/li&gt;
+  &lt;li&gt;Differing artefacts across different environments, i.e. Customer-service-test artefact, and customer-service-prod artefact, how can we be sure that we have verified the software that ends up in production.&lt;/li&gt;
+  &lt;li&gt;Better to use a single artefact and manage configuration separately.&lt;/li&gt;
+  &lt;li&gt;Multiple services per host - while cost efficient has downsides:&lt;/li&gt;
   &lt;li&gt;
     &lt;ul&gt;
       &lt;li&gt;limit your deployment options, image based deployments and immutable servers (unless we tie various services together in a single artefact which we really don’t want to do)&lt;/li&gt;
@@ -132,7 +245,7 @@ Discussion - wrap an overall interaction which is asynchronous into a bunch of s
   &lt;li&gt;
     &lt;ul&gt;
       &lt;li&gt;Allows us to slice up a physical server into separate hosts&lt;/li&gt;
-      &lt;li&gt;Sock drawer analogy, dividers take up space also. &lt;/li&gt;
+      &lt;li&gt;Sock drawer analogy, dividers take up space also.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Vagrant&lt;/li&gt;
@@ -152,25 +265,25 @@ Discussion - wrap an overall interaction which is asynchronous into a bunch of s
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Chapter 8 testing &lt;/p&gt;
+&lt;p&gt;Chapter 8 testing&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Use consumer driven contracts instead of end to end tests&lt;/li&gt;
   &lt;li&gt;What’s wrong with end to end tests, can be brittle and flaky, people lose trust quickly.&lt;/li&gt;
-  &lt;li&gt;Martin fowler talks about test double as a substitute for spy’s mocks stubs etc. read his post &lt;/li&gt;
+  &lt;li&gt;Martin fowler talks about test double as a substitute for spy’s mocks stubs etc. read his post&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Chapter 9 monitoring &lt;/p&gt;
+&lt;p&gt;Chapter 9 monitoring&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Correlation ids is a useful concept, where you pass this along to all services. &lt;/li&gt;
-  &lt;li&gt;Graphite seemed like a nice too, simple Ali for generating charts of your service &lt;/li&gt;
+  &lt;li&gt;Correlation ids is a useful concept, where you pass this along to all services.&lt;/li&gt;
+  &lt;li&gt;Graphite seemed like a nice too, simple Ali for generating charts of your service&lt;/li&gt;
   &lt;li&gt;Ssh multiplexors allow you to perform the same command on multiple ssh terminals.&lt;/li&gt;
   &lt;li&gt;Use metrics to see what services/features are being used.&lt;/li&gt;
-  &lt;li&gt;Hysterix is a circuit breaking library &lt;/li&gt;
+  &lt;li&gt;Hysterix is a circuit breaking library&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Chapter 10 security &lt;/p&gt;
+&lt;p&gt;Chapter 10 security&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Types&lt;/li&gt;
@@ -178,7 +291,7 @@ Discussion - wrap an overall interaction which is asynchronous into a bunch of s
     &lt;ul&gt;
       &lt;li&gt;HTTP Basic Authentication - username password sent as part of HTTP header - highly problematic as username and password not sent in a secure manner, should only be used over HTTPS&lt;/li&gt;
       &lt;li&gt;HTTP Basic Authentication over HTTPS - Due to nature of https, the client gains strong guarantees that the server it is talking to is who it thinks it is. Challenge is that each server needs to manage it’s own certificates which is a problem when shared over multiple machines, certificate issuing process but an operational burden.&lt;/li&gt;
-      &lt;li&gt;TLS - Transport Layer Security. Used to verify that the client is who we think we are talking to (unlike HTTPS). Each client has an X.509 certificate installed, used to establish a link between client and server. &lt;/li&gt;
+      &lt;li&gt;TLS - Transport Layer Security. Used to verify that the client is who we think we are talking to (unlike HTTPS). Each client has an X.509 certificate installed, used to establish a link between client and server.&lt;/li&gt;
       &lt;li&gt;HMAC over HTTP - Body request along with key is hashed.Request uses its own copy of the private key and the request body to recreate the hash, if it matches then it allows the request. Man in the middle messes with  the request then the hash won’t match.Also, private key is never sent in transit, so cannot be compromised. Downside is that the client and server need a shared secret. Amazon use this for S3, if use it, use a long key SHA-256.&lt;/li&gt;
       &lt;li&gt;API Keys - Not security as such, but more to protect services for others. Using an issued API key, twitter can limit how many requests a given person has, stopping overload. Amazon use API keys to limit what services a user has.&lt;/li&gt;
     &lt;/ul&gt;
@@ -197,24 +310,162 @@ Discussion - wrap an overall interaction which is asynchronous into a bunch of s
 
 &lt;ul&gt;
   &lt;li&gt;Failure is everywhere. Many organisations try to put processes and controls to try and stop failure from occurring. But put little or no-thought into actually making it easier to recover from failure in the first place.&lt;/li&gt;
-  &lt;li&gt;Degrading functionality - Sample page on an ecommerce site, we might use 3-4 services, basket, catalogue, &lt;/li&gt;
+  &lt;li&gt;Degrading functionality - Sample page on an ecommerce site, we might use 3-4 services, basket, catalogue,&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         <pubDate>Fri, 20 Mar 2015 00:00:00 +0000</pubDate>
-        <link>http://pkelly03.github.io/book-selection---microservices-architecture</link>
-        <guid isPermaLink="true">http://pkelly03.github.io/book-selection---microservices-architecture</guid>
+        <link>http://pkelly03.github.io/book-selection-microservices-architecture</link>
+        <guid isPermaLink="true">http://pkelly03.github.io/book-selection-microservices-architecture</guid>
+      </item>
+    
+      <item>
+        <title>Book Review - The Well Built Triathlete</title>
+        <description>&lt;p&gt;Chapter 5 - Functional strength&lt;/p&gt;
+
+&lt;p&gt;Aim to provide a resistance program to target the following for your specific sport: 
+   * Mobility 
+   * Stability
+   * Power
+   * Strength&lt;/p&gt;
+
+&lt;p&gt;Lots of programs fail because they don’t target progression, repeating sessions week on week with progression is a waste of time, needs an increasing load to force adaptation. Never do the same program for 4-6 weeks without adding load&lt;/p&gt;
+
+&lt;p&gt;What adaptations are we looking for:
+   * Neural recruitment is improved -brain talking to the muscles to get them firing
+   * More muscular fibres are recruited increasing power and strength
+   * Tolerance for anaerobic exercise improves 
+   * Resistance to fatigue and overall efficiency&lt;/p&gt;
+
+&lt;p&gt;The first part of any strength program is developing good form and full range of motion through a movement. Then we can think about adding load. Always prioritise form over load.&lt;/p&gt;
+
+&lt;p&gt;Break a year into phases&lt;/p&gt;
+
+&lt;p&gt;Phase 1 - foundational strength and stability 12-16 weeks in duration
+Goal
+  1. Increased mobility 
+  2. Improved motor control and balance
+  3. Strength progression in key exercises&lt;/p&gt;
+
+&lt;p&gt;Phase 2 - Synchronisation and power do for 12-16 weeks&lt;/p&gt;
+
+&lt;p&gt;Strength focused exercises of phase 1 translate to more sport specific complex movements. This phase produces the largest amount of fatigue.
+Goal
+   * Further Improve mobility 
+   * Increase stability through more complex movement patterns 
+   * Improve muscle strength and power.&lt;/p&gt;
+
+&lt;p&gt;Phase 3 - race season performance&lt;/p&gt;
+
+&lt;p&gt;Goal
+   * Transfer movement patterns into sports specific movements and power
+   * Maintain muscular strength
+   * Improve muscular power and force potential&lt;/p&gt;
+
+&lt;p&gt;Nearly all the focus is on moving the load quickly and explosively. Strength session is still considered to be a key session during this part of the season.&lt;/p&gt;
+
+&lt;p&gt;Be sensible on how you apply. On a rest day then it compromises recovery also if you do a tough strength session on a day with hard run intervals then injury might be likely&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 20 Mar 2015 00:00:00 +0000</pubDate>
+        <link>http://pkelly03.github.io/book-review-the-well-built-triathlete</link>
+        <guid isPermaLink="true">http://pkelly03.github.io/book-review-the-well-built-triathlete</guid>
+      </item>
+    
+      <item>
+        <title>Book Review - Sleeping, The No Cry Solution</title>
+        <description>&lt;p&gt;Solutions for toddlers 4months to 2 years&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;‘Normal babies sleep through the night’ is an exception to the rule. Lower your expectations&lt;/li&gt;
+  &lt;li&gt;Ask yourself do you secretly love the nighttime moments with you and baby?&lt;/li&gt;
+  &lt;li&gt;If you are to help your baby sleep all night then you will have to force yourself to stick to your plan, even if it’s the 5 time you have attended to him&lt;/li&gt;
+  &lt;li&gt;Tell yourself in these scenarios ‘in a month or two your baby will be sleeping all night’&lt;/li&gt;
+  &lt;li&gt;Sugar (cookies, chocolate) just isn’t good for late in the day.&lt;/li&gt;
+  &lt;li&gt;Baby maybe me hanging on to night feeds during day as comfort. You and baby time.  May have to give more cuddles etc during day to help her adjust.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bedtime routine&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Hour before bed should be very relaxing dim lights&lt;/li&gt;
+  &lt;li&gt;Last step should end in the bedroom with very little chat and usual go to sleep technique&lt;/li&gt;
+  &lt;li&gt;Follow your exact routine every night, however if you notice if notice your child is yawning fussing skip bath and books etc and get him to bed asap.&lt;/li&gt;
+  &lt;li&gt;Establish early bed time routine. 6:30/7pm&lt;/li&gt;
+  &lt;li&gt;Also get up at the same time every morning will help babies biological clock.&lt;/li&gt;
+  &lt;li&gt;Naps help babies sleep during the night, should be between 1-2 hours. If waking after 30 mins, try go into him as soon as you hear murmurs and try and get him back to sleep.&lt;/li&gt;
+  &lt;li&gt;Early afternoon nap is best for sebastian 12-2, try and be consistent, watch for signs as child might get a second wind.&lt;/li&gt;
+  &lt;li&gt;Develop and keep a standard nap routine, a well rested baby can handle different sleep ideas in the evening better.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Learn how to make your baby fall asleep by himself&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;‘My bed is a nice place’ - need to know that their bed is a safe and secure place.&lt;/li&gt;
+  &lt;li&gt;Spend some time in the cot during the day playing with toys etc so that he gets to associate it as a nice place, if he responds positively to this try and get him playing with a toy as you fade away and watch him beside the cot&lt;/li&gt;
+  &lt;li&gt;Falling asleep in more than one way. Try to establish more. Currently sebastian falls asleep on mattress after bottle and then put him into cot. I have been putting him on the mattress but into the cot before he nods off so he is not as surprised when he wakes up, in fact the plan is that he find comfort waking there and should go back to sleep easier - and more importantly, on his own.&lt;/li&gt;
+  &lt;li&gt;Use a toy, not to take your place but to give some comfort in your absence&lt;/li&gt;
+  &lt;li&gt;Place him in between the two of you whenever you feed&lt;/li&gt;
+  &lt;li&gt;When baby wakes during night, do not talk to him other then the sleep cues, ie ssh and nighty night etc. do not turn lights on, affect his biological clock.&lt;/li&gt;
+  &lt;li&gt;Sleep cues, once you decide on them only use then when your baby is tired sleepy and relaxed. Do not use them when crying etc.&lt;/li&gt;
+  &lt;li&gt;You can use white noise as a sleep cue also.&lt;/li&gt;
+  &lt;li&gt;She noted, the way in which our baby falls asleep for the night is how he expects to remain all night long.&lt;/li&gt;
+  &lt;li&gt;Pulling hair to go to sleep, try Pantleys gentle removal plan. Let him grab your hair, but try to put teddy between you. But instead of letting him fall asleep pulling your hair, pull your head away. He will root for your hair, but try and use teddy, eventually he will want your hair again, repeat but take away again and replace with teddy. It might take 10 times initially. But should go down over time, and awakenings should lessen.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Breastfeeding to sleep&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Problem is that baby thinks it’s the only way to fall asleep.&lt;/li&gt;
+  &lt;li&gt;When you are sure your baby is awake and looking to nurse, go ahead and nurse him for a short time. Stay awake! And as soon as he slows his pace from the gulping, drinking mode to the slow fluttery comfort nursing, you can gently disengage him while patting him or rubbing him. (See Pantley’s Gentle Removal Plan above)&lt;/li&gt;
+  &lt;li&gt;If your baby whimpers at any point during this removal process, or somehow lets you know he is up for real (by crawling onto your chest, for example!), go ahead and breastfeed him. Then repeat the process to keep the nursing session short, and disconnect him before he is deeply asleep.&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Fri, 20 Mar 2015 00:00:00 +0000</pubDate>
+        <link>http://pkelly03.github.io/book-review-sleeping-the-no-cry-solution</link>
+        <guid isPermaLink="true">http://pkelly03.github.io/book-review-sleeping-the-no-cry-solution</guid>
+      </item>
+    
+      <item>
+        <title>Book Review - Fast After Fifty</title>
+        <description>&lt;p&gt;Science tells us there are three physiological predictors of your endurance performance that hold true across the aging spectrum:&lt;/p&gt;
+
+&lt;p&gt;• Aerobic capacity 
+• Lactate threshold 
+• Economy&lt;/p&gt;
+
+&lt;p&gt;Aerobic capacity&lt;/p&gt;
+
+&lt;p&gt;Aerobic capacity is a measure of how much oxygen you use when exercising at a sustained, maximal workload. The more oxygen you use, the more energy you’re producing and the faster you can go. How fast you’re going when at your aerobic capacity is one of the best predictors of endurance performance. Also known as v02 max. The limiting factor is how much oxygen you can deliver to the working muscles and their capacity for using it. More simply put, VO 2 max is how much oxygen you are capable of processing per minute relative to your weight.&lt;/p&gt;
+
+&lt;p&gt;Moreover, as an athlete, your fitness age as represented by your VO 2 max is probably a better indicator of your body’s status than your chronological age. People with high aerobic capacities, and therefore lower fitness ages, are generally healthier and live longer. 7 When you find your “age” in this table, don’t be surprised to find that you are years younger than you thought!&lt;/p&gt;
+
+&lt;p&gt;Lactate threshold&lt;/p&gt;
+
+&lt;p&gt;What is it? your muscles use carbohydrate to create energy (specifically, they use glycogen— the muscle’s form of stored sugar), they create a byproduct inside the cells call lactic acid. As the intensity of your workout increases, this lactic acid begins to seep out of the muscle cell into the fluid in the surrounding space and into the bloodstream. As it seaps out however it’s chemical composition changes and hydrogen ions are released. Lactate is useful for athletes, it’s gets a bad rep unnecessarily, it’s the hydrogen ions that are guilty of causing the burning sensation. Measuring lactate levels is really just for measuring how many ions are floating around interfering with muscle contract ions. At low intensities your body has no probs getting rid of the ions however passed you LT, they accumulate and laboured breathing etc kicks in. However you can become less sensitive to it by training at or just less than the Lt. Threshold.&lt;/p&gt;
+
+&lt;p&gt;Economy&lt;/p&gt;
+
+&lt;p&gt;The less oxygen you use per minute at a given submaximal pace or power, the more economical you are. The more economical you are, the less energy (fat and glycogen) it takes to move your body.&lt;/p&gt;
+
+&lt;p&gt;What things can you control to improve your economy so that you use fewer milliliters of oxygen per minute? Perhaps the most common factor is technique. You can change how you move in order to waste less energy. You must realize that if you decide to go this route and make changes in your current technique, there will be a period during which you will become less efficient. This will show up as a higher- than- normal heart rate and somewhat more labored breathing at any given speed or power. And it may take weeks, if not months, to make the new technique your normal one. At that point, you should be faster at the same heart rates as before.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 20 Mar 2015 00:00:00 +0000</pubDate>
+        <link>http://pkelly03.github.io/book-review-fast-after-fifty</link>
+        <guid isPermaLink="true">http://pkelly03.github.io/book-review-fast-after-fifty</guid>
       </item>
     
       <item>
         <title>Reactive Design Patterns - Skimmers Guide Chapter 1</title>
         <description>&lt;ul&gt;
-  &lt;li&gt;Outlines the importance of responsiveness to users. Books will give tips how to stay responsive in the face of variable load, partial outages and program failure. &lt;/li&gt;
-  &lt;li&gt;Presents the reactive manifesto which is a small summary of the challenges facing computer systems. 
+  &lt;li&gt;Outlines the importance of responsiveness to users. Books will give tips how to stay responsive in the face of variable load, partial outages and program failure.&lt;/li&gt;
+  &lt;li&gt;Presents the reactive manifesto which is a small summary of the challenges facing computer systems.
     &lt;ol&gt;
-      &lt;li&gt;It must react to its users (responsiveness)	&lt;/li&gt;
-      &lt;li&gt;It must react to failure and stay available (resilience)	&lt;/li&gt;
-      &lt;li&gt;It must react to variable load conditions (scalability)	&lt;/li&gt;
-      &lt;li&gt;It must react to events (event orientation)	&lt;/li&gt;
+      &lt;li&gt;It must react to its users (responsiveness)&lt;/li&gt;
+      &lt;li&gt;It must react to failure and stay available (resilience)&lt;/li&gt;
+      &lt;li&gt;It must react to variable load conditions (scalability)&lt;/li&gt;
+      &lt;li&gt;It must react to events (event orientation)&lt;/li&gt;
     &lt;/ol&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
@@ -271,19 +522,19 @@ Discussion - wrap an overall interaction which is asynchronous into a bunch of s
       &lt;li&gt;To react to load, a system needs to do be able to do 2 things:
         &lt;ol&gt;
           &lt;li&gt;Need to split up individual streams of work items that can be worked on on different machines in parallel.&lt;/li&gt;
-          &lt;li&gt;Route traffic in the direction of another service depending on load, or spin up new instances if reaching capactity or wind down services if very quiet. &lt;/li&gt;
+          &lt;li&gt;Route traffic in the direction of another service depending on load, or spin up new instances if reaching capactity or wind down services if very quiet.&lt;/li&gt;
         &lt;/ol&gt;
       &lt;/li&gt;
-      &lt;li&gt;number of requests serviced by the system = average number of requests * time spent processing. There is no reason why we can’t automate this figure. This will allow us to determine how much we should parallelize. We can capture requests at entry and exit. &lt;/li&gt;
+      &lt;li&gt;number of requests serviced by the system = average number of requests * time spent processing. There is no reason why we can’t automate this figure. This will allow us to determine how much we should parallelize. We can capture requests at entry and exit.&lt;/li&gt;
       &lt;li&gt;This service would act like a supervisor or monitoring service that polls the system and gathers this metric to determine whether it needs to scale up.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
   &lt;li&gt;Reacting to events
     &lt;ul&gt;
-      &lt;li&gt;The focus should be on events instead of method calls. &lt;/li&gt;
+      &lt;li&gt;The focus should be on events instead of method calls.&lt;/li&gt;
       &lt;li&gt;Should focus on high level interactions instead of micromanaged getters/setters that promote tight coupling etc.&lt;/li&gt;
       &lt;li&gt;Amdahls Law, if a program can be 95% parallelizable, then 5% must be done processed in a globally agreed sequential fashion. Amdahls law determines the effect this has on a system. This limits scalability. Ideally you want to share nothing!&lt;/li&gt;
-      &lt;li&gt;Most APIs ie socket api, have a synchronous facade above an event-driven system. Blocking calls lead to expensive context switching between threads. &lt;/li&gt;
+      &lt;li&gt;Most APIs ie socket api, have a synchronous facade above an event-driven system. Blocking calls lead to expensive context switching between threads.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
 &lt;/ol&gt;
@@ -300,16 +551,16 @@ Discussion - wrap an overall interaction which is asynchronous into a bunch of s
   * Essential complexity - complexity introduced by the problem domain
   * Incidental complexity - complexity introduced by the solution to the problem.
   * Higher level abstractions might tackle the essential complexity, but introduce incidental complexity  - ie the performance and scalability issues that might arise.
-  * &lt;/p&gt;
+  *&lt;/p&gt;
 </description>
         <pubDate>Mon, 11 Aug 2014 00:00:00 +0100</pubDate>
-        <link>http://pkelly03.github.io/reactive-design-patterns--chapter-1-digest</link>
-        <guid isPermaLink="true">http://pkelly03.github.io/reactive-design-patterns--chapter-1-digest</guid>
+        <link>http://pkelly03.github.io/reactive-design-patterns-chapter-1-digest</link>
+        <guid isPermaLink="true">http://pkelly03.github.io/reactive-design-patterns-chapter-1-digest</guid>
       </item>
     
       <item>
         <title>Book Selection - Reactive Design Patterns</title>
-        <description>&lt;p&gt;Our company set up a book club recently where our loose plan is that we are going to try and read an IT book once a month. This month we decided on Reactive Design Patterns. Will keep you posted how we get on. &lt;/p&gt;
+        <description>&lt;p&gt;Our company set up a book club recently where our loose plan is that we are going to try and read an IT book once a month. This month we decided on Reactive Design Patterns. Will keep you posted how we get on.&lt;/p&gt;
 
 </description>
         <pubDate>Fri, 25 Jul 2014 00:00:00 +0100</pubDate>
