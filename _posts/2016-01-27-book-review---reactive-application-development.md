@@ -43,6 +43,10 @@ Chapter 2
 
 Akka - location transparency. Distributed by design. Local and remote interfaces are the same.
 
+- Message Driven - through messages
+- Elastic - Through clustering, no single point of failure, bottleneck, cluster sharding
+- Responsive - Seamless integration with Futures. Routers and Dispatchers make parallel programming easy. 
+
 Good example of contention scenarios
 
 Contention causes problems end of. What's the solution?
